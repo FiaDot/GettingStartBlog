@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="utf-8">
+	<title>{% block title %}Blog 한글 테스트{% endblock %}</title>
+</head>
+
+<body>
+	<div id="sidebar"> {% block sidebar %} {% endblock %} </div>
+	<div id="container">
+		<div id="menu">
+			{% block nav-global %}
+			
+				<a href="{% url 'blog.views.main' %}"><h3>b 한글테스트</h3></a>
+				
+				{% if user.is_staff %}
+				<a href="{% url 'admin:index' %}">Admin</a>
+				<a href="{% url 'admin:blog_post_add' %}">Add Post</a>
+				{% endif %}
+				
+			{% endblock %}
+		</div>	
+	</div> 
+	
+	<div id="contents">
+		{% block content %}{% endblock %}
+	</div>
+</body>
+
+</html>
