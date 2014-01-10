@@ -4,8 +4,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from blog.models import Post
 from blog.models import Comment
-from django.forms import ModelForm
 from django.core.context_processors import csrf
+from blog.forms import CommentForm
 
 def main(request):
     """ Main listing """
@@ -40,10 +40,6 @@ def post(request, pk):
 
 
 
-class CommentForm(ModelForm):
-    class Meta:
-        model = Comment
-        exclude = ["post"]
 
 def add_comment(request, pk):
     """Add a new comment."""
