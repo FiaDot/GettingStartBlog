@@ -49,7 +49,8 @@ def add_comment(request, pk):
     """Add a new comment."""
     p = request.POST
 
-    if p.has_key("body") and p["body"]:
+    # p.has_key("body")    is deprecated ?
+    if p["body"]:
         author = "Anonymous"
         if p["author"]: author = p["author"]
 
