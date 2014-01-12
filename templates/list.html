@@ -6,11 +6,15 @@
         <!-- Posts  -->
         <ul>
             {% for post in posts.object_list %}
-                <div class="title"><a href="{% url 'blog.views.post' post.id %}">{{ post.title }}</a> </div>
+            <article>
+             <div class="row marketing">
+        		<div class="col-lg-6">
+        			<h4><a href="{% url 'blog.views.post' post.id %}">{{ post.title }}</a></h4>
                 <ul>
                     <div class="time">{{ post.created }}</div>
                     <div class="body">{{ post.body|linebreaks }}</div>
                 </ul>
+            </article>
             {% endfor %}
         </ul>
 

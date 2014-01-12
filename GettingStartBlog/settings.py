@@ -39,7 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.staticfiles',    
     'blog',
 )
 
@@ -86,7 +86,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
-
+STATIC_ROOT = '/static/'
+STATICFILES_DIRS = ( 
+   os.path.join(BASE_DIR, 'static').replace(os.sep, '/'),              
+                    )
 # BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 
 
