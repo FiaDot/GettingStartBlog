@@ -1,42 +1,51 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="main">
+    
+     <!-- Posts  -->    
+	<div class="row">
+		{% for post in posts.object_list %}
+    	<div class="col-lg-8">
+    		<a href="{% url 'blog.views.post' post.id %}">{{ post.title|truncatewords:"8" }}</a>
+      		<span class="glyphicon glyphicon-time"></span> Posted on {{ post.created }}	        
+			<div class="body">{{ post.body|truncatewords:"20" }}</div>	                
+            <hr>
+    	</div>
+    	 {% endfor %}
+    </div>    
+    
+    
+    <!-- Page links -->    
+    <!-- TODO : digg style paginator 
+    {% if posts.object_list and posts.paginator.num_pages > 1 %}
+    <ui class="pagination">
+		{% for output_page in posts.paginator.page_range %}
+			{% ifequal output_page posts.number %}
+				<li class="active"><a href="?page={{ output_page }}">{{ output_page }}</a></li>
+			{% else %}
+				<li><a href="?page={{ output_page }}">{{ output_page }} </a></li>			
+	        {% endifequal %}
+   		{% endfor %}
+    </ui>
+    {% endif %}
+   	-->
+   
+    {% if posts.object_list and posts.paginator.num_pages > 1 %}
+    <ul class="pager">		
+	 	{% if posts.has_previous %}
+		<li class="previous"><a href="?page={{ posts.previous_page_number }}">Prev</a></li>
+		{% else %}
+		<li class="previous disabled"><a href="#">Prev</a></li>
+		{% endif %}		
+		
+		{% if posts.has_next %}
+		<li class="next"><a href="?page={{ posts.next_page_number }}">Next</a></li>
+		{% else %}
+		<li class="next disabled"><a href="#">Next</a></li>				
+		{% endif %}		
+	</ul>
+    {% endif %}
 
-        <!-- Posts  -->
-        <ul>
-            {% for post in posts.object_list %}
-            <article>
-             <div class="row marketing">
-        		<div class="col-lg-6">
-        			<h4><a href="{% url 'blog.views.post' post.id %}">{{ post.title }}</a></h4>
-                <ul>
-                    <div class="time">{{ post.created }}</div>
-                    <div class="body">{{ post.body|linebreaks }}</div>
-                </ul>
-            </article>
-            {% endfor %}
-        </ul>
-
-        <!-- Next/Prev page links  -->
-        {% if posts.object_list and posts.paginator.num_pages > 1 %}
-        <div class="pagination" style="margin-top: 20px; margin-left: -20px; ">
-            <span class="step-links">
-                {% if posts.has_previous %}
-                    <a href= "?page={{ posts.previous_page_number }}">newer entries &lt;&lt; </a>
-                {% endif %}
-
-                <span class="current">
-                    &nbsp;Page {{ posts.number }} of {{ posts.paginator.num_pages }}
-                </span>
-
-                {% if posts.has_next %}
-                    <a href="?page={{ posts.next_page_number }}"> &gt;&gt; older entries</a>
-                {% endif %}
-            </span>
-        </div>
-        {% endif %}
-
-    </div>
+ 
 
 {% endblock %}

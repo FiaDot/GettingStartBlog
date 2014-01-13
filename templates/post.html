@@ -1,44 +1,74 @@
 {% extends "base.html" %}
 
 {% block content %}
-   <div class="main">
+<div class="main">
 
-	<!-- Posts  -->
-	<ul>
-        <div class="title">{{ post.title }}</div>
-        <ul>
-            <div class="time">{{ post.created }}</div>
-            <div class="body">{{ post.body|linebreaks }}</div>
-        </ul>
-	</ul>
-
+    <!-- Posts  -->
+	<div class="row">
+    	<div class="col-lg-8">
+    		<h1><a href="{% url 'blog.views.post' post.id %}">{{ post.title }}</a></h1>
+        	<p class="lead">by <a href="fiadot@gmail.com">author</a></p>
+        	<hr>
+      		<p><span class="glyphicon glyphicon-time"></span> Posted on {{ post.created }}</p>
+	        <hr>
+			<div class="body">{{ post.body|linebreaks }}</div>	                
+    	</div>
+    </div>    
+    
+            
 	<!--  Comments  -->
-	{% if comments %}
-	<p>Comments:</p>
+	{% if comments %}	
+	<h4>Comments:</h4>	
 	{% endif %} 
 	
-	{% for comment in comments %}
-	<div class="comment">
-		<div class="time">{{ comment.created }} | {{ comment.author }}</div>
-		<div class="body">{{ comment.body|linebreaks }}</div>
+	{% for comment in comments %}	
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<span class="label label-success"><strong>{{ comment.author }}</strong></span> posted on {{ comment.created }}
+		</div>		
+		<div class="panel-footer">
+			{{ comment.body|linebreaks }}
+		</div>			
 	</div>
 	{% endfor %}
-
-
-    <div id="addc">Add a comment</div>
-    <!-- Comment form  -->
-    <form action="{% url 'blog.views.add_comment' post.id %}" method="POST">
-      {% csrf_token %}
-      <div id="cform">
-        Name: {{ form.author }}
-        <p>{{ form.body }}</p>
-      </div>
-      <div id="submit">
-        <input type="submit" value="Submit">
-      </div>
-    </form>
-    
-    
-</div>
+	
+	
+	
+	<!--  Add comment  -->
+	<div class="panel panel-success">
+        
+		<div class="panel-heading">
+  			<div class="panel-body">
+    			<h4>Add new comment</h4>
+  			</div>
+  		</div>
+  		
+  		<div class="panel-body">
+		   	<!-- Comment form  -->
+		    <form class="form-inline" action="{% url 'blog.views.add_comment' post.id %}" method="POST">      
+		    {% csrf_token %}     
+		    	<div class="control-group">
+		        	<label class="control-label" for="author">Author</label>
+		        	<div class="controls">
+		          		<div class="contorls">{{ form.author }}</div>
+		        	</div>
+		      	</div>
+		      	
+		        <div class="control-group">
+		        	<label class="control-label" for="author">Body</label>
+		          	<div class="controls">
+		           		<div class="contorls">{{ form.body }}</div>
+		         	</div>
+		        </div>
+		        
+		      	<div class="control-group">     
+		      		<div class="controls">    
+		            	<button type="submit" value="Submit" class="btn">Submit</button>
+		         	</div>
+		        </div>    
+		   	 </form>  
+		</div> <!-- panel-body -->
+	</div> <!-- panel panel-success -->
+</div> <!-- main -->
 
 {% endblock %}
